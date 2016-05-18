@@ -1,0 +1,285 @@
+<html>
+<head>
+	<title>CHS HOSA | Login/Register</title>
+    <link rel="stylesheet" href="hosaisstylish.css"/>
+</head>
+<body>
+	<script>
+		/* Initialize password-checking cookie */
+		document.cookie="pw_match=false";
+	</script>
+    <div id="nav-bar">
+			<div class="nav-link" id="home">
+				<a href="/hosa.php"><img src="/img/blue-chshosa-logo.png" alt="HOSA logo" id="hosa_logo"/></a>
+			</div>
+            <a href="/login.html"><div class="nav-link" id="login">Login/Register</div></a>
+		</div>
+	<div id="register_area">
+        <h2>Register</h2>
+        <form name="register_form" action="verifyregister.php" method="post">
+            <p><input type="text" name="firstname" value="First Name"></p>
+            <p><input type="text" name="lastname" value="Last Name"></p>
+            <p><input type="text" name="studentid" value="Student ID"></p>
+            <p><select name="ethnicity">
+				<option value="default">Select your ethnicity...</option>
+				<option value="WHITE">White</option>
+				<option value="ASIAN">Asian</option>
+				<option value="HISPANIC">Hispanic</option>
+				<option value="OTHER">Other</option>
+            </select></p>
+            <p><select name="grade">
+                <option value="default">Select your grade...</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select></p>
+            <p><input type="text" name="address" value="Street Address"></p>
+            <p><input type="text" name="city" value="City" size="12">, <input type="text" name="state" value="State" maxlength="2" size="3"></p>
+            <p><input type="text" name="zip" value="ZIP Code"></p>
+            <p><input type="text" name="personalemail" value="Personal Email"></p>
+            <p><input type="text" name="parentemail" value="Parent Email"></p>
+            <p>
+				<select name="yearsBefore">
+					<option value="default">I have been in HOSA for:</option>
+					<option value="0">Never</option>
+					<option value="1">1 year</option>
+					<option value="2">2 years</option>
+					<option value="3">3 years</option>
+				</select>
+            </p>
+            <p><input type="text" name="career" value="My career goal is..."></p>
+            <p><select name="competition">
+				<option value="default">I want to compete in:</option>
+				<option value="0">Dental Terminology</option>
+				<option value="1">Medical Spelling</option>
+				<option value="2">Medical Terminology</option>
+				<option value="3">Medical Math</option>
+				<option value="4">Medical Reading</option>
+				<option value="5">Knowledge Tests</option>
+				<option value="6">Biomedical Laboratory Science</option>
+				<option value="7">Clinical Nursing</option>
+				<option value="8">Clinical Specialty</option>
+				<option value="9">Dental Science</option>
+				<option value="10">Home Health Aide</option>
+				<option value="11">Medical Assisting</option>
+				<option value="12">Nursing Assisting</option>
+				<option value="13">Physical Therapy</option>
+				<option value="14">Sports Medicine</option>
+				<option value="15">Veterinary Science</option>
+				<option value="16">CERT Skills</option>
+				<option value="17">CPR/First Aid</option>
+				<option value="18">Emergency Medical Technician</option>
+				<option value="19">Epidemiology</option>
+				<option value="20">MRC Partnership</option>
+				<option value="21">Public Health</option>
+				<option value="22">Extemporaneous Health Poster</option>
+				<option value="23">Extemporaneous Writing</option>
+				<option value="24">Healthy Lifestyle</option>
+				<option value="25">Job Seeking Skills</option>
+				<option value="26">Medical Photography</option>
+				<option value="27">Prepared Speaking</option>
+				<option value="28">Researched Persuasive Speaking</option>
+				<option value="29">Biomedical Debate</option>
+				<option value="30">Community Awareness</option>
+				<option value="31">Creative Problem Solving</option>
+				<option value="32">Forensic Medicine</option>
+				<option value="33">Health Career Display</option>
+				<option value="34">Health Education</option>
+				<option value="35">HOSA Bowl</option>
+				<option value="36">Medical Innovation</option>
+				<option value="37">Parliamentary Procedure</option>
+				<option value="38">Public Service Announcement</option>
+            </select> <a href="http://hosa.org/node/117"><img src="/img/info.png" alt="Learn More" width="16px" height="16px"></a></p>
+            <p><select name="meetingTime">
+            	<option value="default">I can attend meetings on:</option>
+            	<option value="Thurs">Thursday Afternoon</option>
+            	<option value="Fri">Friday Morning</option>
+            </select></p>
+            <p><select name="shirtSize"><option value="default">My T-shirt size is:</option>
+            	<option value="S">S</option>
+            	<option value="M">M</option>
+            	<option value="L">L</option>
+            	<option value="XL">XL</option>
+            </select></p>
+            <p><input type="text" value="Password" name="setpassword"></p>
+            <p><input type="text" value="Verify Password" name="verifypassword"></p>
+            <p><input type="submit" value="Register" name="registerbutton" disabled></p>
+        </form>
+    </div>
+    <div id="login_area">
+        <h2>Login</h2>
+        <form name="login_form" action="verifylogin.php" method="post">
+            <p><input type="text" name="username" value="Student ID"></p>
+            <p><input type="text" name="password" value="Password"></p>
+            <input type="submit" value="Login">
+        </form>
+    </div>
+    <script>
+
+
+
+
+
+
+
+
+function resetFormEl(e) {
+    if (e.target.value == "") {
+        switch (e.target.name) {
+        case "firstname":
+            e.target.value = "First Name";
+            break;
+        case "lastname":
+            e.target.value = "Last Name";
+            break;
+        case "username":
+            e.target.value = "Student ID";
+            break;
+        case "studentid":
+            e.target.type = "text";
+            e.target.value = "Student ID";
+            break;
+        case "password":
+            e.target.type = "text";
+            e.target.value = "Password";
+            break;
+        case "setpassword":
+            e.target.type = "text";
+            e.target.value = "Password";
+            break;
+            case "verifypassword":
+            e.target.type = "text";
+            e.target.value = "Verify Password";
+            break;
+        case "zip":
+            e.target.type = "text";
+            e.target.value = "ZIP Code";
+            break;
+        case "address":
+            e.target.value = "Street Address";
+            break;
+        case "city":
+            e.target.value = "City";
+            break;
+        case "state":
+            e.target.value = "State";
+            break;
+        case "career":
+            e.target.value = "My career goal is...";
+            break;
+        default:
+            e.target.value = "Oops! I felled over!";
+        }
+    }
+}
+var formEls = document.getElementsByTagName("input");
+for (var i = 0; i < formEls.length; i++) {
+    if (formEls[i].type == "text" || formEls[i].type == "email") {
+        formEls[i].onfocus = function(e) {
+            switch (e.target.name) {
+            case "firstname":
+                if (e.target.value == "First Name") {
+                    e.target.value = "";
+                }
+                break;
+            case "lastname":
+                if (e.target.value == "Last Name") {
+                    e.target.value = "";
+                }
+                break;
+            case "username":
+                if (e.target.value == "Student ID") {
+                    e.target.value = "";
+                }
+                break;
+            case "password":
+            case "setpassword":
+                if (e.target.value == "Password") {
+                    e.target.type = "password";
+                    e.target.value = "";
+                }
+                break;
+                case "verifypassword":
+                if (e.target.value == "Verify Password") {
+                    e.target.type = "password";
+                    e.target.value = "";
+                }
+                break;
+            case "studentid":
+                if (e.target.value == "Student ID") {
+                    e.target.type = "number";
+                }
+                break;
+            case "zip":
+                if (e.target.value == "ZIP Code") {
+                    e.target.type = "number";
+                }
+                break;
+            case "address":
+                if (e.target.value == "Street Address") {
+                    e.target.value = "";
+                }
+                break;
+            case "city":
+                if (e.target.value == "City") {
+                    e.target.value = "";
+                }
+                break;
+            case "state":
+                if (e.target.value == "State") {
+                    e.target.value = "";
+                }
+                break;
+            case "career":
+                if (e.target.value == "My career goal is...") {
+                    e.target.value = "";
+                }
+                break;
+            default:
+                e.target.value = "Oops! I felled over!";
+            }
+        }
+        formEls[i].addEventListener("blur", resetFormEl);
+        formEls[i].addEventListener("blur", function() {
+        	var pw1 = document.forms["register_form"]["setpassword"].value;
+		var pw2 = document.forms["register_form"]["verifypassword"].value;
+    	if(pw1 == pw2 && pw1.length > 3) {
+		if(document.forms["register_form"]["firstname"].value != "First Name"
+		&& document.forms["register_form"]["lastname"].value != "Last Name"
+		&& document.forms["register_form"]["studentid"].value != "Student ID"
+		&& document.forms["register_form"]["grade"].value != "default"
+		&& document.forms["register_form"]["competition"].value != "default"
+		&& document.forms["register_form"]["shirtSize"].value != "default") {
+			// if pw's match and form filled out, enable registerbutton
+			document.forms["register_form"]["registerbutton"].disabled=false;
+		}
+	}
+        });
+    }
+}
+
+var pwMatch = function() {
+	var pw1 = document.forms["register_form"]["setpassword"].value;
+	var pw2 = document.forms["register_form"]["verifypassword"].value;
+	if(pw1 == pw2 && pw1.length > 3) {
+		if(document.forms["register_form"]["firstname"].value != "First Name"
+		&& document.forms["register_form"]["lastname"].value != "Last Name"
+		&& document.forms["register_form"]["studentid"].value != "Student ID"
+		&& document.forms["register_form"]["grade"].value != "default"
+		&& document.forms["register_form"]["competition"].value != "default"
+		&& document.forms["register_form"]["shirtSize"].value != "default") {
+			// if pw's match and form filled out, enable registerbutton
+			document.forms["register_form"]["registerbutton"].disabled=false;
+		}
+	}
+	else {
+		document.forms["register_form"]["registerbutton"].disabled=true;
+	}
+}
+
+document.forms["register_form"]["setpassword"].addEventListener("keyup", pwMatch);
+document.forms["register_form"]["verifypassword"].addEventListener("keyup", pwMatch);
+</script>
+</body>
+</html>

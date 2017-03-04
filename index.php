@@ -1,58 +1,22 @@
 <!DOCTYPE html>
-<?php
-if(!isset($_COOKIE['loggedin'])) {
-    setcookie('loggedin', 'false');
-    header("Location: /hosa.php");
-}
-?>
 <html>
-	<head>
-		<title>CHS HOSA</title>
-		<link rel="stylesheet" href="hosaisstylish.css"/>
-	</head>
-	<body>
-		<div id="nav-bar">
-			<div class="nav-link" id="home">
-				<a href="/hosa.php"><img src="/img/blue-chshosa-logo.png" alt="HOSA logo" id="hosa_logo"/></a>
-			</div>
-            <a href="/calendar.html"><div class="nav-link" id="calendar-link">
-                Calendar
-            </div></a>
-            <?php
-            if($_COOKIE["loggedin"] == 'true') {
-				# connect to db
-				$dbhost = "localhost";
-				$dbuser = "root";
-				$dbpass = '';
-				$db = "hosa";
-
-				$conn = mysqli_connect($dbhost, $dbuser, $dbpass, $db);
-
-				$un = $_COOKIE['user'];
-				$query = "SELECT officer FROM members WHERE studentId = '" . $un . "'";
-				$result = mysqli_query($conn, $query);
-				$row = mysqli_fetch_assoc($result);
-				if($row["officer"] == 1) {
-					echo '<a href="/records.php"><div class="nav-link" id="records-link">Records</div></a>';
-				}
-            }
-            ?>
-                <?php if($_COOKIE['loggedin'] == 'false') {echo '<a href="/login.html"><div class="nav-link" id="login">Login/Register</div></a>';}
-                else{echo '<a onclick="logout()" style="cursor:pointer"><div class="nav-link" id="login">Logout</div></a>';}?>
-		
-		</div>
-		<h1>Welcome to CHS HOSA</h1>
-        <p>You are currently <?php
-if($_COOKIE['loggedin'] == 'false') {
-    echo "not ";
-} ?>logged in<?php if($_COOKIE['loggedin'] == 'true') {echo " as " . $_COOKIE['user'];} ?>.</p>
-        
-        <script>
-            function logout() {
-                document.cookie="user=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-                document.cookie="loggedin=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-                location.reload();
-            }
-        </script>
-	</body>
+<head>
+<meta name="twitter:card" content="app">
+<meta name="twitter:site" content="@FuSuDiOfThWAtLa">
+<meta name="twitter:text:title" content="Show & Sell">
+<meta name="twitter:description" content="This is an app to host digital yard sales that I am designing for FBLA. It's Android-exclusive.">
+<meta name="twitter:app:name:iphone" content="Show & Sell">
+<meta name="twitter:app:id:iphone" content="">
+<meta name="twitter:app:url:iphone" content="">
+<meta name="twitter:app:name:ipad" content="Show & Sell">
+<meta name="twitter:app:id:ipad" content="">
+<meta name="twitter:app:url:ipad" content="">
+<meta name="twitter:app:name:googleplay" content="Show & Sell">
+<meta name="twitter:app:id:googleplay" content="com.insertcoolnamehere.showandsell">
+<meta name="twitter:app:url:googleplay" content="showandsell://aad3bcc2-460c-4d98-8f11-3384fd3feff0">
+<title>Show &amp; Sell</title>
+</head>
+<body>
+This is the S&amp;S website. It's gr8. Would r8 8 of 8.
+</body>
 </html>

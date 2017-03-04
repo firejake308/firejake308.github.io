@@ -14,6 +14,9 @@
 <meta name="twitter:app:name:googleplay" content="Show And Sell">
 <meta name="twitter:app:id:googleplay" content="com.insertcoolnamehere.showandsell">
 <meta name="twitter:app:url:googleplay" content="showandsell://aad3bcc2-460c-4d98-8f11-3384fd3feff0">
+  <?php
+  echo '<meta name="twitter:app:url:googleplay" content="'.$_GET["itemId"].'">'
+  ?>
 <title>Show &amp; Sell</title>
 </head>
 <body>

@@ -7,15 +7,18 @@
 <meta name="twitter:description" content="This is an app to host digital yard sales that I am designing for FBLA. It's Android-exclusive.">
 <meta name="twitter:app:name:iphone" content="Show And Sell">
 <meta name="twitter:app:id:iphone" content="">
-<meta name="twitter:app:url:iphone" content="">
+  <?php
+  echo '<meta name="twitter:app:url:iphone" content="showandsell://'.$_GET["itemId"].'">'
+  ?>
 <meta name="twitter:app:name:ipad" content="Show And Sell">
 <meta name="twitter:app:id:ipad" content="">
-<meta name="twitter:app:url:ipad" content="">
+  <?php
+  echo '<meta name="twitter:app:url:ipad" content="showandsell://'.$_GET["itemId"].'">'
+  ?>
 <meta name="twitter:app:name:googleplay" content="Show And Sell">
 <meta name="twitter:app:id:googleplay" content="com.insertcoolnamehere.showandsell">
-<meta name="twitter:app:url:googleplay" content="showandsell://aad3bcc2-460c-4d98-8f11-3384fd3feff0">
   <?php
-  echo '<meta name="twitter:app:url:googleplay" content="'.$_GET["itemId"].'">'
+  echo '<meta name="twitter:app:url:googleplay" content="showandsell://'.$_GET["itemId"].'">'
   ?>
 <title>Show &amp; Sell</title>
 </head>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>CHS HOSA</title>
+		<link rel="stylesheet" href="hosaisstylish.css"/>
+	</head>
+	<body>
+		<div id="nav-bar">
+			<div class="nav-link" id="home">
+				<a href="/hosa.html"><img src="/img/blue-chshosa-logo.png" alt="HOSA logo" id="hosa_logo"/></a>
+			</div>
+			<div class="nav-link" id="login">
+				<a href="/login.html">Login/Register</a>
+			</div>
+		</div>
+		<h1>Welcome to CHS HOSA</h1>
+        <p>You are currently <?php
+if(!$GLOBALS['loggedin']) {
+    echo "not "
+}
+?>logged in.</p>
+	</body>
+</html>

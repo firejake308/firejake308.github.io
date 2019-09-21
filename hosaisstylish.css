@@ -1,0 +1,98 @@
+@font-face {
+	font-family: dekar;
+	src: url(/Dekar.otf);
+}
+body {
+	margin: 0px;
+    font-family: dekar;
+}
+
+#nav-bar {
+	background-color: rgb(24,99,139);
+    height: 115px;
+    border-top: 5px solid rgb(26,153,221);
+    border-bottom: 5px solid rgb(26,153,221);
+}
+.nav-link {
+	border-left: 5px solid rgb(26,153,221); 
+	border-right: 5px solid rgb(26, 153, 221);
+	/*border: 5px solid rgb(26, 153, 221);*/
+	display: block;
+	padding: 10px;
+    
+}
+#home {
+	float: left;   
+    height: 95px;
+}
+#login, #calendar-link, #records-link{
+	float: right;
+    height: 95px;
+    vertical-align: middle;
+    line-height: 95px;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+}
+#calendar-link, #records-link {
+    float: left;
+}
+#hosa_logo {
+    width: 188px;
+    height: 91px;
+}
+p, h1, h2, h3, h4, h5 {
+    margin: 10px;
+    text-align: center;
+}
+#register_area, #update_meetings {
+    margin-top: 50px;
+    border-right: 2px solid grey;
+    width: 50%;
+    height: 400px;
+    float: left;
+}
+#login_area, #update_service {
+    margin-top: 50px;
+    width: 49%;
+    height: 400px;
+    float: right;
+    text-align: center;
+}
+/* Forms */
+input, select {
+	font-family: dekar;
+}
+input[type=text], input[type=number], input[type=email], input[type=password], select {
+    border-width: 0px 0px 2px 0px;
+    border-style: solid;
+    border-color: darkgrey;
+    box-shadow: 2px 3px 3px darkgrey;
+    color: lightslategrey;
+}
+input[type=text]:focus, input[type=number]:focus, input[type=email]:focus, input[type=password]:focus, select:focus {
+    color: darkslategrey;
+}
+input[type=submit] {
+    padding: 8px 15px;
+    color: white;
+    background-color: rgb(24,99,139);
+    border-radius: 6px;
+    border-color: rgb(24,99,139);
+    border-style: solid;
+	box-shadow: 2px 3px 3px navy;
+}
+input[type=submit]:hover {
+    box-shadow: 0px 0px 0px navy;
+    position: relative;
+    top: 2px;
+    left: 1px;
+}
+input[type=submit]:disabled {
+	box-shadow: 0px 0px 0px white;
+	background-color: rgb(191, 191, 191);
+	border-color: rgb(191,191,191);
+	position: relative;
+	top: 0px;
+	left: 0px;
+}

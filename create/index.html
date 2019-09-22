@@ -5,7 +5,9 @@
     </head>
     <body>
         <p>Welcome baack</p>
+        <button id="create-playlist-btn" onclick="createPlaylist">Create Playlist</button>
         <script>
+        function createPlaylist() {
             var queryString = window.location.href.split('#')[1];
             if (queryString) {
                 var urlParams = new URLSearchParams();
@@ -23,6 +25,7 @@
                 // User has denied access. Redirect to home page
                 location.href = 'https://firejake308.github.io';
             }
+        }
         </script>
     </body>
 </html>

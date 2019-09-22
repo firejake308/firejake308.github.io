@@ -22,7 +22,14 @@
                 height: 100%;
             }
             #create-playlist-btn {
-                margin: auto;
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 10px;
+            }
+            #create-progress-container {
+                margin-left: 8px;
+                margin-right: 8px;
+                max-width: 300px;
             }
         </style>
     </head>
@@ -38,7 +45,6 @@
         </div>
         <script>
         var SONGS_IN_PLAYLIST = 50;
-        var PARTITIONS = 10; // must be a factor of SONGS_IN_PLAYLIST because I'm lazy
 
         var createPlaylistBtn = document.getElementById('create-playlist-btn');
         var progressContainer = document.getElementById('create-progress-container');
@@ -70,9 +76,9 @@
                     })
 
                     res = await res.json();
-                    console.log(res);
                     var trackList = res.items;
                     finalLibrarySize = res.total;
+                    progressBar.style.width = userLibrary.length / finalLibrarySize * 100 + '%';
 
                     if (finalLibrarySize < SONGS_IN_PLAYLIST) {
                         alert('You have less than 50 songs in your library, so there\'s'
@@ -89,31 +95,26 @@
                         });
                 }
 
-                // select 5 songs from each of 10 partitions
+                
                 let playlistTracks = [];
-                for (let i = 0; i < PARTITIONS; i++) {
-                    let startIndex = userLibrary.length / 10 * i;
-                    let endIndex = Math.min(userLibrary.length, userLibrary.length / 10 * (i + 1));
+                var weights = [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1];
+                var totalWeight = weights.reduce((acc, curr) => acc + curr);
+                for (let i = 0; i < SONGS_IN_PLAYLIST; i++) {
+                    // select a partition to draw from
+                    var cumulativeWeight = 0;
+                    var rand = Math.random();
+                    for (let w = 0; w < weights.length; w++) {
+                        cumulativeWeight += weights[w];
+                        if (rand < cumulativeWeight / totalWeight) {
+                            // select track from wth partition
+                            let startIndex = w * SONGS_IN_PLAYLIST / weights.length;
+                            let endIndex = Math.min(weights.length, (w + 1) * SONGS_IN_PLAYLIST / weights.length);
+                            let chosenIndex = Math.floor(startIndex + (endIndex - startIndex) * Math.random());
+                            playlistTracks.push(userLibrary[chosenIndex].trackId);
 
-                    // populate bag of indices
-                    let bagOfIIndices = [];
-                    for (let j = startIndex; j < endIndex; j++)
-                        bagOfIIndices.push(j);
-                    
-                    // shuffle indices
-                    for (let j = 0; j < bagOfIIndices.length; j++)
-                        for (let k = 0; k < bagOfIIndices.length; k++) {
-                            if (Math.random() < 0.5) {
-                                let temp = bagOfIIndices[j];
-                                bagOfIIndices[j] = bagOfIIndices[k];
-                                bagOfIIndices[k] = j;
-                            }
+                            // remove song from library to prevent double picks
+                            userLibrary = userLibrary.slice(0, chosenIndex).concat(userLibrary.slice(chosenIndex + 1));
                         }
-                    
-                    // add first few tracks from bag into playlist
-                    for (let j = 0; j < SONGS_IN_PLAYLIST / PARTITIONS; j++) {
-                        let index = bagOfIIndices[j];
-                        playlistTracks.push(userLibrary[index].trackId);
                     }
                 }
                 console.log(playlistTracks);

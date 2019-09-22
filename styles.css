@@ -22,12 +22,9 @@ h1, h5 {
     color: white;
 }
 #text-container {
-    background-color: #222222;
-    opacity: 0.2;
+    background-color: #222222aa;
     border-radius: 8px;
-}
-#text-container * {
-    opacity: 1.0;
+    padding: 12px;
 }
 #create-progress-container {
     width: 75%;

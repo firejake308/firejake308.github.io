@@ -18,3 +18,14 @@ button {
 html, body {
     height: 100%;
 }
+h1, h5 {
+    color: white;
+}
+#text-container {
+    background-color: #222222;
+    opacity: 0.2;
+    border-radius: 2px;
+}
+#progress-container {
+    width: 75%;
+}

@@ -24,8 +24,11 @@ h1, h5 {
 #text-container {
     background-color: #222222;
     opacity: 0.2;
-    border-radius: 2px;
+    border-radius: 8px;
 }
-#progress-container {
+#text-container * {
+    opacity: 1.0;
+}
+#create-progress-container {
     width: 75%;
 }

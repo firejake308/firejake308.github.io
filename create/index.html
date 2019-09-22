@@ -37,6 +37,9 @@
                 </div>
         </div>
         <script>
+        var SONGS_IN_PLAYLIST = 50;
+        var PARTITIONS = 10; // must be a factor of SONGS_IN_PLAYLIST because I'm lazy
+
         var createPlaylistBtn = document.getElementById('create-playlist-btn');
         var progressContainer = document.getElementById('create-progress-container');
         var progressBar = document.getElementById('create-progress-bar');
@@ -71,18 +74,53 @@
                     var trackList = res.items;
                     finalLibrarySize = res.total;
 
+                    if (finalLibrarySize < SONGS_IN_PLAYLIST) {
+                        alert('You have less than 50 songs in your library, so there\'s'
+                            + ' not much that Shuffel can do for you.')
+                        progressContainer.hidden = true;
+                        return;
+                    }
+
                     // add into userLibrary array
                     for (let track of trackList)
                         userLibrary.push({
-                            addedDate: track.added_at,
+                            addedDate: new Date(track.added_at),
                             trackId: track.track.id
                         });
-            
-                    // re-enable button and hide progress bar
-                    createPlaylistBtn.disabled = false;
-                    progressContainer.hidden = true;
                 }
 
+                // select 5 songs from each of 10 partitions
+                let playlistTracks = [];
+                for (let i = 0; i < PARTITIONS; i++) {
+                    let startIndex = userLibrary.length / 10 * i;
+                    let endIndex = Math.min(userLibrary.length, userLibrary.length / 10 * (i + 1));
+
+                    // populate bag of indices
+                    let bagOfIIndices = [];
+                    for (let j = startIndex; j < endIndex; j++)
+                        bagOfIIndices.push(j);
+                    
+                    // shuffle indices
+                    for (let j = 0; j < bagOfIIndices.length; j++)
+                        for (let k = 0; k < bagOfIIndices.length; k++) {
+                            if (Math.random() < 0.5) {
+                                let temp = bagOfIIndices[j];
+                                bagOfIIndices[j] = bagOfIIndices[k];
+                                bagOfIIndices[k] = j;
+                            }
+                        }
+                    
+                    // add first few tracks from bag into playlist
+                    for (let j = 0; j < SONGS_IN_PLAYLIST / PARTITIONS; j++) {
+                        let index = bagOfIIndices[j];
+                        playlistTracks.push(userLibrary[index].trackId);
+                    }
+                }
+                console.log(playlistTracks);
+
+                // re-enable button and hide progress bar
+                createPlaylistBtn.disabled = false;
+                progressContainer.hidden = true;
                 console.log(userLibrary);
             }
             else {

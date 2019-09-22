@@ -21,6 +21,9 @@
             html, body {
                 height: 100%;
             }
+            #create-playlist-btn {
+                margin: auto;
+            }
         </style>
     </head>
     <body>
@@ -53,30 +56,32 @@
                 var accessToken = urlParams.get('access_token');
 
                 // fetch the user's library, 50 tracks at a time, until all tracks are fetched
-                while (userLibrary.length < finalLibrarySize)
-                    fetch('https://api.spotify.com/v1/me/tracks?limit=50&offset='+userLibrary.length, {
+                while (userLibrary.length < finalLibrarySize) {
+                    let res = await fetch('https://api.spotify.com/v1/me/tracks?limit=50&offset='+userLibrary.length, {
                         headers: {
                             'Authorization': 'Bearer ' + accessToken,
                             'Accept': 'application/json',
                             'Content-Type': 'application/json'
                         },
                         mode: 'cors'
-                    }).then((res) => res.json()).then((res) => {
-                        console.log(res)
-                        var trackList = res.items;
-                        finalLibrarySize = res.total;
+                    })
 
-                        // add into userLibrary array
-                        for (let track of trackList)
-                            userLibrary.push({
-                                addedDate: track.added_at,
-                                trackId: track.track.id
-                            });
-             
-                        // re-enable button and hide progress bar
-                        createPlaylistBtn.disabled = false;
-                        progressContainer.hidden = true;
-                    });
+                    res = res.json();
+                    console.log(res);
+                    var trackList = res.items;
+                    finalLibrarySize = res.total;
+
+                    // add into userLibrary array
+                    for (let track of trackList)
+                        userLibrary.push({
+                            addedDate: track.added_at,
+                            trackId: track.track.id
+                        });
+            
+                    // re-enable button and hide progress bar
+                    createPlaylistBtn.disabled = false;
+                    progressContainer.hidden = true;
+                }
 
                 console.log(userLibrary);
             }

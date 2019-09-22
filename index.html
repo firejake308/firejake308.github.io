@@ -23,9 +23,17 @@
         <button id="start-btn">Start</button>
     </div>
     <script>
+        const CLIENT_ID = '770386c6c8aa40e09d345197a58eacd3';
+        const REDIRECT_URI = 'https://firejake308.github.io';
+        const SCOPES = 'playlist-modify-private';
+
         var startBtn = document.getElementById("start-btn");
         startBtn.onclick = function() {
             console.log('Button clicked');
+            location.href = 'https://accounts.spotify.com/authorize?client_id=' 
+                + encodeURIComponent(CLIENT_ID) + '&redirect_uri='
+                + encodeURIComponent(REDIRECT_URI) + '&response_type=token'
+                + '&scope=' + encodeURIComponent(SCOPES);
         }
     </script>
 </body>

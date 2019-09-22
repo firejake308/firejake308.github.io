@@ -6,7 +6,7 @@
     <body>
         <p>Welcome baack</p>
         <script>
-            var urlParams = new URLSearchParams(window.location.search);
+            var urlParams = new URLSearchParams(window.location.href.split('#')[1]);
             console.log(urlParams.get('access_token'));
         </script>
     </body>

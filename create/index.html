@@ -6,8 +6,21 @@
     <body>
         <p>Welcome baack</p>
         <script>
-            var urlParams = new URLSearchParams(window.location.href.split('#')[1]);
-            console.log(urlParams.get('access_token'));
+            var queryString = window.location.href.split('#')[1];
+            if (queryString) {
+                var urlParams = new URLSearchParams();
+                var accessToken = urlParams.get('access_token');
+                fetch('https://api.spotify.com/v1/me/tracks', {
+                    headers: {
+                        'Authorization': 'Bearer ' + accessToken
+                    },
+                    mode: 'cors'
+                }).then((res) => console.log(res.json()))
+            }
+            else {
+                // User has denied access. Redirect to home page
+                location.href = 'https://firejake308.github.io';
+            }
         </script>
     </body>
 </html>

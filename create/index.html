@@ -25,10 +25,14 @@
     </head>
     <body>
         <div id="btn-container">
-            <button id="create-playlist-btn" onclick="createPlaylist">Create Playlist</button>
+            <button 
+                id="create-playlist-btn"
+                class="btn btn-primary"
+                onclick="createPlaylist">Create Playlist</button>
         </div>
         <script>
         function createPlaylist() {
+            console.log('creating playlist...');
             var userLibrary = [];
             var queryString = window.location.href.split('#')[1];
             if (queryString) {

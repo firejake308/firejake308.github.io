@@ -12,7 +12,9 @@
                 var accessToken = urlParams.get('access_token');
                 fetch('https://api.spotify.com/v1/me/tracks', {
                     headers: {
-                        'Authorization': 'Bearer ' + accessToken
+                        'Authorization': 'Bearer ' + accessToken,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
                     },
                     mode: 'cors'
                 }).then((res) => console.log(res.json()))

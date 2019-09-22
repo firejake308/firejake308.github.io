@@ -29,10 +29,21 @@
                 id="create-playlist-btn"
                 class="btn btn-primary"
                 onclick="createPlaylist()">Create Playlist</button>
+                <div id="create-progress-container" class="progress" hidden>
+                    <div id="create-progress-bar" class="progress-bar" role="progressbar"></div>
+                </div>
         </div>
         <script>
+        var creatPlaylistBtn = document.getElementById('create-playlist-btn');
+        var progressContainer = document.getElementById('create-progress-container');
+        var progressBar = document.getElementById('create-progress-bar');
+
         function createPlaylist() {
             console.log('creating playlist...');
+            // disable create button and show progress bar
+            createPlaylistBtn.disabled = true;
+            progressContainer.hidden = false;
+
             var userLibrary = [];
             var finalLibrarySize = 51;
             var queryString = window.location.href.split('#')[1];
@@ -61,6 +72,10 @@
                                 addedDate: track.added_at,
                                 trackId: track.track.id
                             });
+             
+                        // re-enable button and hide progress bar
+                        createPlaylistBtn.disabled = false;
+                        progressContainer.hidden = true;
                     });
 
                 console.log(userLibrary);

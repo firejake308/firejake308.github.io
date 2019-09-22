@@ -8,6 +8,7 @@
         <!--button id="create-playlist-btn" onclick="createPlaylist">Create Playlist</button-->
         <script>
         //function createPlaylist() {
+            var userLibrary = [];
             var queryString = window.location.href.split('#')[1];
             if (queryString) {
                 var urlParams = new URLSearchParams(queryString);
@@ -19,7 +20,16 @@
                         'Content-Type': 'application/json'
                     },
                     mode: 'cors'
-                }).then((res) => console.log(res.json()))
+                }).then((res) => res.json()).then((res) => {
+                    console.log(res)
+                    var trackList = res.items;
+                    for (let track of trackList)
+                        userLibrary.push({
+                            addedDate: track.added_at,
+                            trackId: track.track.id
+                        });
+                    console.log(userLibrary);
+                })
             }
             else {
                 // User has denied access. Redirect to home page

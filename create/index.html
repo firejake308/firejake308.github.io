@@ -14,7 +14,7 @@
                 align-content: center;
                 justify-content: center;
                 position: absolute;
-                background-image: url('headphones.png');
+                background-image: url('/headphones.png');
                 background-size: cover;
                 background-position: center;
             }
@@ -34,27 +34,36 @@
         function createPlaylist() {
             console.log('creating playlist...');
             var userLibrary = [];
+            var finalLibrarySize = 51;
             var queryString = window.location.href.split('#')[1];
             if (queryString) {
+                // parse access token out of query string
                 var urlParams = new URLSearchParams(queryString);
                 var accessToken = urlParams.get('access_token');
-                fetch('https://api.spotify.com/v1/me/tracks', {
-                    headers: {
-                        'Authorization': 'Bearer ' + accessToken,
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    mode: 'cors'
-                }).then((res) => res.json()).then((res) => {
-                    console.log(res)
-                    var trackList = res.items;
-                    for (let track of trackList)
-                        userLibrary.push({
-                            addedDate: track.added_at,
-                            trackId: track.track.id
-                        });
-                    console.log(userLibrary);
-                })
+
+                // fetch the user's library, 50 tracks at a time, until all tracks are fetched
+                while (userLibrary.length < finalLibrarySize)
+                    fetch('https://api.spotify.com/v1/me/tracks?limit=50&offset='+userLibrary.length, {
+                        headers: {
+                            'Authorization': 'Bearer ' + accessToken,
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        mode: 'cors'
+                    }).then((res) => res.json()).then((res) => {
+                        console.log(res)
+                        var trackList = res.items;
+                        finalLibrarySize = res.total;
+
+                        // add into userLibrary array
+                        for (let track of trackList)
+                            userLibrary.push({
+                                addedDate: track.added_at,
+                                trackId: track.track.id
+                            });
+                    });
+
+                console.log(userLibrary);
             }
             else {
                 // User has denied access. Redirect to home page

@@ -131,9 +131,9 @@
                         'Authorization': 'Bearer ' + accessToken,
                         'Content-Type': 'application/json'
                     },
-                    body: {
-                        'uris': JSON.stringify(trackURIs)
-                    }
+                    body: JSON.stringify({
+                        'uris': trackURIs
+                    })
                 });
                 progressBar.style.width = '100%';
 

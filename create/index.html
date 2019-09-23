@@ -94,10 +94,52 @@
                 }
                 console.log(playlistTracks);
 
+                // reset progress bar
+                progressBar.style.width = '0%';
+
+                // get user id
+                let userIdResponse = await fetch('https://api.spotify.com/v1/me', {
+                    headers: {
+                        'Authorization': 'Bearer ' + accessToken
+                    }
+                }).then(res => res.json());
+                let userId = userIdResponse.id;
+                progressBar.style.width = '25%';
+                
+                // create playlist
+                let playlistJSON = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + accessToken,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: 'My Shuffel Playlist',
+                        public: false
+                    })
+                }).then(res => res.json());
+                let playlistId = playlistJSON.id;
+                progressBar.style.width = '50%';
+
+                // populate array of track URIs
+                let trackURIs = playlistTracks.map(id => 'spotify:track:' + id);
+
+                // add tracks to playlist
+                await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + accessToken,
+                        'Content-Type': 'application/json'
+                    },
+                    body: {
+                        'uris': JSON.stringify(trackURIs)
+                    }
+                });
+                progressBar.style.width = '100%';
+
                 // re-enable button and hide progress bar
                 createPlaylistBtn.disabled = false;
                 progressContainer.hidden = true;
-                console.log(userLibrary);
             }
             else {
                 // User has denied access. Redirect to home page

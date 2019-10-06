@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="/styles.css">
     </head>
     <body>
-        <div id="btn-container">
+        <div id="btn-container" class="custom-card">
             <h5>How heavily weighted should newer songs be in your playlist?</h5>
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 <label class="btn btn-primary active">
@@ -32,7 +32,6 @@
             </div>
             <iframe 
                 id="playlist-view"
-                src="https://open.spotify.com/embed/playlist/1gw4mLjLQmArBtQ8nhhC36" 
                 width="300" height="380" 
                 frameborder="0" 
                 allowtransparency="true" 
@@ -189,8 +188,11 @@
                         'uris': trackURIs
                     })
                 }).then(res => {
-                    if (res.ok) 
+                    if (res.ok) {
+                        // show the created playlist
                         playlistView.style.visibility = 'visible';
+                        playlistView.src = "https://open.spotify.com/embed/playlist/" + playlistId;
+                    }
                 });
                 progressBar.style.width = '100%';
 

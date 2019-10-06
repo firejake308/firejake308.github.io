@@ -21,11 +21,14 @@ html, body {
 h1, h5 {
     color: white;
 }
-#text-container {
+.custom-card {
     background-color: #222222aa;
     border-radius: 8px;
     padding: 12px;
 }
 #create-progress-container {
     width: 75%;
+}
+#create-playlist-btn {
+    margin-top: 12px;
 }

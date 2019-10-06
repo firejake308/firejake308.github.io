@@ -8,35 +8,37 @@
         <link rel="stylesheet" href="/styles.css">
     </head>
     <body>
-        <div id="btn-container" class="custom-card">
-            <h5>How heavily weighted should newer songs be in your playlist?</h5>
-            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-primary active">
-                    <input type="radio" name="skew-selector" id="kinda" checked> Kinda
-                </label>
-                <label class="btn btn-primary">
-                    <input type="radio" name="skew-selector" id="mostly"> Mostly
-                </label>
-                <label class="btn btn-primary">
-                    <input type="radio" name="skew-selector" id="extremely"> Extremely
-                </label>
+        <div id="btn-container">
+            <div class="custom-card">
+                <h5>How heavily weighted should newer songs be in your playlist?</h5>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-primary active">
+                        <input type="radio" name="skew-selector" id="kinda" checked> Kinda
+                    </label>
+                    <label class="btn btn-primary">
+                        <input type="radio" name="skew-selector" id="mostly"> Mostly
+                    </label>
+                    <label class="btn btn-primary">
+                        <input type="radio" name="skew-selector" id="extremely"> Extremely
+                    </label>
+                </div>
+                <button 
+                    id="create-playlist-btn"
+                    class="btn btn-primary"
+                    onclick="createPlaylist()">
+                    Create Playlist
+                </button>
+                <div id="create-progress-container" class="progress" hidden>
+                    <div id="create-progress-bar" class="progress-bar" role="progressbar"></div>
+                </div>
+                <iframe 
+                    id="playlist-view"
+                    width="300" height="380" 
+                    frameborder="0" 
+                    allowtransparency="true" 
+                    allow="encrypted-media"
+                    style="visibility: hidden;"></iframe>
             </div>
-            <button 
-                id="create-playlist-btn"
-                class="btn btn-primary"
-                onclick="createPlaylist()">
-                Create Playlist
-            </button>
-            <div id="create-progress-container" class="progress" hidden>
-                <div id="create-progress-bar" class="progress-bar" role="progressbar"></div>
-            </div>
-            <iframe 
-                id="playlist-view"
-                width="300" height="380" 
-                frameborder="0" 
-                allowtransparency="true" 
-                allow="encrypted-media"
-                style="visibility: hidden;"></iframe>
         </div>
         <script>
         var SONGS_IN_PLAYLIST = 50;

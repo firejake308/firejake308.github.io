@@ -9,13 +9,35 @@
     </head>
     <body>
         <div id="btn-container">
+            <h5>How heavily weighted should newer songs be in your playlist?</h5>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-primary active">
+                    <input type="radio" name="skew-selector" id="kinda" checked> Kinda
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="skew-selector" id="mostly"> Mostly
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="skew-selector" id="extremely"> Extremely
+                </label>
+            </div>
             <button 
                 id="create-playlist-btn"
                 class="btn btn-primary"
-                onclick="createPlaylist()">Create Playlist</button>
-                <div id="create-progress-container" class="progress" hidden>
-                    <div id="create-progress-bar" class="progress-bar" role="progressbar"></div>
-                </div>
+                onclick="createPlaylist()">
+                Create Playlist
+            </button>
+            <div id="create-progress-container" class="progress" hidden>
+                <div id="create-progress-bar" class="progress-bar" role="progressbar"></div>
+            </div>
+            <iframe 
+                id="playlist-view"
+                src="https://open.spotify.com/embed/playlist/1gw4mLjLQmArBtQ8nhhC36" 
+                width="300" height="380" 
+                frameborder="0" 
+                allowtransparency="true" 
+                allow="encrypted-media"
+                style="visibility: hidden;"></iframe>
         </div>
         <script>
         var SONGS_IN_PLAYLIST = 50;
@@ -23,6 +45,7 @@
         var createPlaylistBtn = document.getElementById('create-playlist-btn');
         var progressContainer = document.getElementById('create-progress-container');
         var progressBar = document.getElementById('create-progress-bar');
+        var playlistView = document.getElementById('playlist-view');
 
         async function createPlaylist() {
             console.log('creating playlist...');
@@ -69,11 +92,42 @@
                         });
                 }
 
+                // set appropriate weights
+                const KINDA = [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1];
+                const MOSTLY = KINDA.map(w => Math.pow(w, 2));
+                const EXTREMELY = KINDA.map(w => Math.pow(w, 5));
+                var weights = KINDA;
+                var options = [false, false, false];
+                $('[name="skew-selector"]').each(function(i){options[i] = this.checked});
+                if (options[0])
+                    weights = KINDA;
+                else if (options[1])
+                    weights = MOSTLY;
+                else if (options[2])
+                    weights = EXTREMELY;
                 
                 let playlistTracks = [];
-                var weights = [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1];
                 var totalWeight = weights.reduce((acc, curr) => acc + curr);
-                for (let i = 0; i < SONGS_IN_PLAYLIST; i++) {
+                // this method guarantees the right proportions of songs
+                // from each partition
+                for (let w = weights.length - 1; w >= 0; w--) {
+                    let songsThisPartition = Math.round(weights[w] / totalWeight * SONGS_IN_PLAYLIST);
+                    // overrride math for the last partition
+                    if (w == 0) songsThisPartition = SONGS_IN_PLAYLIST - playlistTracks.length;
+                    for (let i = 0; i < songsThisPartition; i++) {
+                        // select track from wth partition
+                        let startIndex = w * SONGS_IN_PLAYLIST / weights.length;
+                        let endIndex = Math.min(weights.length, (w + 1) * SONGS_IN_PLAYLIST / weights.length);
+                        let chosenIndex = Math.floor(startIndex + (endIndex - startIndex) * Math.random());
+                        playlistTracks.push(userLibrary[chosenIndex].trackId);
+
+                        // remove song from library to prevent double picks
+                        userLibrary = userLibrary.slice(0, chosenIndex).concat(userLibrary.slice(chosenIndex + 1));
+                    }
+                }
+
+                // random playlist building
+                /*for (let i = 0; i < SONGS_IN_PLAYLIST; i++) {
                     // select a partition to draw from
                     var cumulativeWeight = 0;
                     var rand = Math.random();
@@ -91,7 +145,7 @@
                             break;
                         }
                     }
-                }
+                }*/
                 console.log(playlistTracks);
 
                 // reset progress bar
@@ -115,7 +169,7 @@
                     },
                     body: JSON.stringify({
                         name: 'My Shuffel Playlist',
-                        public: false
+                        public: true
                     })
                 }).then(res => res.json());
                 let playlistId = playlistJSON.id;
@@ -134,6 +188,9 @@
                     body: JSON.stringify({
                         'uris': trackURIs
                     })
+                }).then(res => {
+                    if (res.ok) 
+                        playlistView.style.visibility = 'visible';
                 });
                 progressBar.style.width = '100%';
 
